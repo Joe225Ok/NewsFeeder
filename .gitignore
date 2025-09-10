@@ -1,0 +1,5 @@
+.vscode
+newsfeeder_venv
+__pycache__
+*.pyc 
+*venv*

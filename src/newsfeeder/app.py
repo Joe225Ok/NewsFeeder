@@ -10,7 +10,7 @@ FEEDS = {
     'SANS ISC': 'https://isc.sans.edu/rssfeed.xml',
     'DC3': 'http://www.dc3.mil/index#news',  # Placeholder, may need scraping
     'US-CERT': 'https://www.cisa.gov/uscert/ncas/all.xml',
-    'Threat Brief': 'https://threatbrief.com/feed/',
+    'Threat Brief': 'https://threatbrief.com/feed/'
     # 'Owasp Top10': 'https://owasp.org/www-project-top-ten/all.xml',
     # 'Genai Owasp': 'https://genai.owasp.org/all.xml'
 }
@@ -35,12 +35,13 @@ def index():
                 'summary': first_line
             })
     from dateutil import parser as dateparser
+    from datetime import datetime, timezone
     def parse_date(entry):
         try:
             return dateparser.parse(entry['published'])
         except Exception:
-            return None
-    all_entries.sort(key=lambda x: parse_date(x) or '', reverse=True)
+            return datetime(1970, 1, 1, tzinfo=timezone.utc)
+    all_entries.sort(key=parse_date, reverse=True)
     return render_template('index.html', entries=all_entries)
 
 if __name__ == '__main__':
